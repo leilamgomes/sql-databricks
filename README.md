@@ -15,13 +15,13 @@ Curso prático que aborda a linguagem do SQL com exercícios mãos na massa, uti
 
 **Conteúdo:** <br />
 
-Dia 01: Acesso ao Databricks, conhecendo a plataforma, conectando e sincronizando o Databricks com o Github <br />
+Dia 00: Acesso ao Databricks, conhecendo a plataforma, conectando e sincronizando o Databricks com o Github <br />
 <br />
-Dia 02: Select, From, Where, limit, e função DATEDIFF <br />
+Dia 01: Select, From, Where, limit, e função DATEDIFF <br />
 <br />
-Dia 03: Like, distinct, case, count e outras funções de agregação como MAX, MIN, AVG, função YEAR, group by e ainda como padronizar o número de decimais de um resultado utilizando o ROUND e o INT. <br />
+Dia 02: Like, distinct, case, count e outras funções de agregação como MAX, MIN, AVG, função YEAR, group by e ainda como padronizar o número de decimais de um resultado utilizando o ROUND e o INT. <br />
 <br />
-Dia 04: Sort by <br />
+Dia 03: Sort by <br />
 <br />
-Dia 05: <br />
+Dia 04: <br />
 <br />
