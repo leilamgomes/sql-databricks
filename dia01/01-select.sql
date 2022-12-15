@@ -1,13 +1,16 @@
 -- Databricks notebook source
-SELECT 'OLÁ MUNDO'
+SELECT
+  'OLÁ MUNDO'
 
 -- COMMAND ----------
 
-SELECT 1 + 10 * 2
+SELECT
+  1 + 10 * 2
 
 -- COMMAND ----------
 
-SELECT ABS(10 - 1000)
+SELECT
+  ABS(10 - 1000)
 
 -- COMMAND ----------
 

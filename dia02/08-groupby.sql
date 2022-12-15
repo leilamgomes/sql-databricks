@@ -6,4 +6,6 @@ SELECT
 FROM
   silver_olist.cliente
 GROUP BY 
-  descUF
+  descUF  -- agrupando por UF
+  
+-- GROUP BY, agrupa o resultado
