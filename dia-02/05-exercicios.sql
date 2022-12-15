@@ -57,8 +57,8 @@ WHERE
 SELECT
   *
 FROM
-  silver_olist.
-WHERE
+  silver_olist.item_pedido
+WHERE idPedidoItem > 1
 
 -- COMMAND ----------
 
@@ -132,3 +132,36 @@ FROM
   silver_olist.pagamento_pedido
   
 -- WHERE vlParcela >= 20
+
+-- COMMAND ----------
+
+-- DBTITLE 1,9. Selecione todos os pedidos e marque se houve atraso ou não
+SELECT
+  *,
+  CASE
+    WHEN dtEntregue > dtEstimativaEntrega THEN 'atrasado'
+    WHEN dtEntregue < dtEstimativaEntrega THEN 'adiantado'
+    WHEN dtEntregue = dtEstimativaEntrega THEN 'pontual'
+  END AS statusEntrega
+FROM
+  silver_olist.pedido
+
+-- COMMAND ----------
+
+-- DBTITLE 1,9. Selecione os pedidos e defina os grupos em uma nova coluna separado por faixa de frete
+-- para frete inferior à 10%: '10%'
+-- para frente entre 10% e 25%: '10% a 25%'
+-- para frente entre 25% e 50%: '25% a 50%'
+-- para frente maior que 50%: '50%'
+
+
+SELECT
+  *,
+  CASE
+    WHEN vlFrete / vlPreco < 0.10 THEN '< 10%'
+    WHEN vlFrete / vlPreco BETWEEN 0.10 AND 0.25 THEN '10% a 25%'
+    WHEN vlFrete / vlPreco BETWEEN 0.25 AND 0.50 THEN '25% a 50%'
+    WHEN vlFrete / vlPreco > 0.50 THEN '> 50%'
+  END AS faixaFrete
+  FROM
+  silver_olist.item_pedido
