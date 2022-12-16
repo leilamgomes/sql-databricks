@@ -108,9 +108,10 @@ SELECT
 FROM
   silver_olist.pedido
 WHERE
-  YEAR(dtPedido) = '2017'
-  AND MONTH(dtPedido) = '12'
-  AND dtEntregue > dtEstimativaEntrega -- WHERE DATEDIFF(dtEntregue, dtEstimativaEntrega) = -2
+  YEAR(dtPedido) = 2017
+  AND MONTH(dtPedido) = 12
+  AND descSituacao = 'delivered'
+  AND DATE(dtEntregue) > DATE(dtEstimativaEntrega)
 
 -- COMMAND ----------
 
@@ -127,11 +128,12 @@ WHERE
 -- DBTITLE 1,8. Lista de pedidos com 2 ou mais parcelas menores que R$ 20,00.
 SELECT
   *,
-  vlPagamento / nrPacelas AS vlParcela
+  ROUND(vlPagamento / nrPacelas,2) AS vlParcela
 FROM
   silver_olist.pagamento_pedido
-  
--- WHERE vlParcela >= 20
+WHERE
+  nrPacelas >= 2
+  AND vlPagamento / nrPacelas < 20
 
 -- COMMAND ----------
 
@@ -139,16 +141,16 @@ FROM
 SELECT
   *,
   CASE
-    WHEN dtEntregue > dtEstimativaEntrega THEN 'atrasado'
-    WHEN dtEntregue < dtEstimativaEntrega THEN 'adiantado'
-    WHEN dtEntregue = dtEstimativaEntrega THEN 'pontual'
+    WHEN DATE(dtEntregue) > DATE(dtEstimativaEntrega) THEN 'atrasado'
+    WHEN DATE(dtEntregue) < DATE(dtEstimativaEntrega) THEN 'adiantado'
+    WHEN DATE(dtEntregue) = DATE(dtEstimativaEntrega) THEN 'pontual'
   END AS statusEntrega
 FROM
   silver_olist.pedido
 
 -- COMMAND ----------
 
--- DBTITLE 1,9. Selecione os pedidos e defina os grupos em uma nova coluna separado por faixa de frete
+-- DBTITLE 1,9. Selecione os itens de pedidos e defina os grupos em uma nova coluna separado por faixa de frete
 -- para frete inferior à 10%: '10%'
 -- para frente entre 10% e 25%: '10% a 25%'
 -- para frente entre 25% e 50%: '25% a 50%'
@@ -157,11 +159,13 @@ FROM
 
 SELECT
   *,
+  vlPreco + vlFrete AS vlTotal,
+  vlFrete / (vlPreco + vlFrete) AS pctFrete,
   CASE
-    WHEN vlFrete / vlPreco < 0.10 THEN '< 10%'
-    WHEN vlFrete / vlPreco BETWEEN 0.10 AND 0.25 THEN '10% a 25%'
-    WHEN vlFrete / vlPreco BETWEEN 0.25 AND 0.50 THEN '25% a 50%'
-    WHEN vlFrete / vlPreco > 0.50 THEN '> 50%'
+    WHEN vlFrete / (vlPreco + vlFrete) <= 0.10 THEN '< 10%'
+    WHEN vlFrete / (vlPreco + vlFrete) <= 0.25 THEN '10% a 25%'
+    WHEN vlFrete / (vlPreco + vlFrete) <= 0.50 THEN '25% a 50%'
+    ELSE '+50%'
   END AS faixaFrete
   FROM
   silver_olist.item_pedido
