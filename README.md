@@ -21,7 +21,9 @@ Dia 01: Select, From, Where, limit, e função DATEDIFF <br />
 <br />
 Dia 02: Like, distinct, case, count e outras funções de agregação como MAX, MIN, AVG, função YEAR, group by e ainda como padronizar o número de decimais de um resultado utilizando o ROUND e o INT. <br />
 <br />
-Dia 03: Group by, order by, having, join <br />
+Dia 03: Group by, order by, having <br />
 <br />
-Dia 04: <br />
+Dia 04: Left join, Right Join, Inner Join <br />
+<br />
+Dia 05: Window function <br />
 <br />
