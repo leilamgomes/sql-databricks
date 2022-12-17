@@ -23,7 +23,7 @@ Dia 02: Like, distinct, case, count e outras funções de agregação como MAX, 
 <br />
 Dia 03: Group by, order by, having <br />
 <br />
-Dia 04: Left join, Right Join, Inner Join <br />
+Dia 04: Left join, Right join, Inner join <br />
 <br />
 Dia 05: Window function <br />
 <br />
